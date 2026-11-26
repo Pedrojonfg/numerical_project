@@ -1,0 +1,5 @@
+method,integrand,d,n_nodes_or_samples,value,error,seconds,seed
+tensor,constant_one,2,9,4.0,0.0,0.01,
+monte_carlo,constant_one,2,1000,3.98,0.02,0.05,0
+tensor,smooth_product,2,25,4.0,0.0,0.02,
+monte_carlo,smooth_product,2,2000,3.95,0.05,0.08,1

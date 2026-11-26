@@ -1,25 +1,65 @@
 # Numerical Methods — Final Project
 
-Course project materials for Numerical Methods (M. Vaquero), BAM Y2.
+**Chosen topic:** Multidimensional quadrature (tensor Gauss vs Monte Carlo vs Smolyak) + 2R soft reachability.
 
-## Proposals
+| Doc | Purpose |
+|---|---|
+| [`docs/project-in-plain-words.md`](docs/project-in-plain-words.md) | **Whole project** in plain words + who does which part |
+| [`docs/owners/`](docs/owners/README.md) | Personal guide per person (plain language + unlocks) |
+| [`plan.md`](plan.md) | Full work split |
+| [`docs/contracts.md`](docs/contracts.md) | **Locked** technical contracts (read before coding) |
 
-Four candidate project pitches live in [`research/proposals/`](research/proposals/):
+## Team — open your page
 
-1. [Multidimensional quadrature for robot / geometry volumes](research/proposals/01-multidimensional-quadrature-robot-workspace.md)
-2. [Quasi-Newton (BFGS) for planar robot inverse kinematics](research/proposals/02-quasinewton-inverse-kinematics.md)
-3. [Orthogonal polynomials → Gaussian quadrature → spectral methods](research/proposals/03-orthogonal-polynomials-gaussian-to-spectral.md)
-4. [Shooting-method BVPs for ballistic trajectories](research/proposals/04-shooting-bvp-ballistic-trajectories.md)
+| Person | Guide | Owns (short) |
+|---|---|---|
+| Kai | [docs/owners/kai.md](docs/owners/kai.md) | Tensor / grid method + “explosion with dimension” plots |
+| Pedro | [docs/owners/pedro.md](docs/owners/pedro.md) | Sparse method + comparison + report skeleton + extras |
+| Mario | [docs/owners/mario.md](docs/owners/mario.md) | Random method + robot score + slide story |
+| Bhuvi | [docs/owners/bhuvi.md](docs/owners/bhuvi.md) | Live demo + Q&A cards |
+| Anita | [docs/owners/anita.md](docs/owners/anita.md) | Shared test problems, CSV/plots toolkit, dependencies |
 
-Group-fit synthesis: [`research/briefs/research-brief-group-fit.md`](research/briefs/research-brief-group-fit.md)
+**Workflow:** `scope/<name>` branch → **PR into `main`**. See contracts for file ownership.
 
-## Presentation
+## Setup
 
-Beamer deck to choose among proposals:
+```bash
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -e ".[dev]"
+pytest -q
+```
 
-- Source: [`presentation/choose_project.tex`](presentation/choose_project.tex)
-- PDF: [`presentation/choose_project.pdf`](presentation/choose_project.pdf)
+Domain is **\([-1,1]^d\)** (course Gauss). MC must use \(X=2U-1\) and volume \(2^d\).
 
-## Survey
+## Layout
 
-Topic-priority intake CSV: [`survey_extract/`](survey_extract/)
+```
+src/quad_project/   # importable package
+  integrands/       # shared test f's
+  rules/            # methods (stubs until owners implement)
+  robot/            # 2R soft score (Mario)
+  plotting/         # CSV → figures
+results/            # experiment CSVs (see example_fake.csv)
+notebooks/          # demos
+docs/contracts.md   # do not change casually
+plan.md             # who owns what
+```
+
+## Quick smoke
+
+```python
+from quad_project.integrands import get_integrand
+import numpy as np
+
+f = get_integrand("constant_one")
+x = np.random.default_rng(0).uniform(-1, 1, size=(100, 3))
+assert f(x).shape == (100,)
+assert f.exact_integral(3) == 8.0
+```
+
+## Research archive
+
+Earlier proposal pitches: [`research/proposals/`](research/proposals/).  
+Group-fit brief: [`research/briefs/research-brief-group-fit.md`](research/briefs/research-brief-group-fit.md).  
+Beamer chooser: [`presentation/`](presentation/).

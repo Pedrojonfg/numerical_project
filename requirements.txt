@@ -1,0 +1,8 @@
+# Runtime (Anita owns this file — request changes via PR)
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.7
+pandas>=2.0
+
+# Dev
+pytest>=7.0
