@@ -14,6 +14,25 @@ Numerical_Methods_TODO.pdf
 pdf_extract/
 *.zip
 
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.ipynb_checkpoints/
+
+# Local experiment dumps (keep example_fake.csv / .gitkeep)
+results/*.csv
+!results/example_fake.csv
+!results/.gitkeep
+
 # OS / editor
 .DS_Store
 Thumbs.db
